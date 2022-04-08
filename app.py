@@ -5,11 +5,11 @@ from dash.dependencies import Input, Output, State
 
 
 ########### Define your variables ######
-myheading1='Predicting Home Sale Prices in Ames, Iowa'
-image1='ames_welcome.jpeg'
-tabtitle = 'Ames Housing'
+myheading1='Predicting Student Performance in School'
+image1='StudentPerf.jpeg'
+tabtitle = 'Student Performance'
 sourceurl = 'http://jse.amstat.org/v19n3/decock.pdf'
-githublink = 'https://github.com/plotly-dash-apps/501-linear-reg-ames-housing'
+githublink = 'https://github.com/vharkar/501-linear-reg-student-perf'
 
 
 ########### Initiate the app
@@ -24,7 +24,7 @@ app.layout = html.Div(children=[
     html.Div([
         html.Img(src=app.get_asset_url(image1), style={'width': '30%', 'height': 'auto'}, className='four columns'),
         html.Div([
-                html.H3('Features of Home:'),
+                html.H3('Factors in a Student\'s life:'),
                 html.Div('Year Built:'),
                 dcc.Input(id='YearBuilt', value=2010, type='number', min=2006, max=2010, step=1),
                 html.Div('Bathrooms:'),
