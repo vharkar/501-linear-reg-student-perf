@@ -25,7 +25,7 @@ app.layout = html.Div(children=[
     html.Div([
         html.Img(src=app.get_asset_url(image1), style={'width': '30%', 'height': 'auto'}, className='four columns'),
         html.Div([
-                html.H3('Student\'s Test Scores (Sum of Math, Reading, Writing Scores) after Covid Lockdowns:'),
+                html.H4('Student\'s Test Score is sum of Math, Reading & Writing Scores'),
                 html.Div('Student had Covid:'),
                 dcc.Input(id='HadCovid', value=0, type='number', min=0, max=1, step=1),
                 html.Div('Household Income:'),
@@ -102,7 +102,7 @@ def ames_lr_function(clicks, HadCovid, Income, Lunch, Computers, Fed, Med, PreCo
         return "waiting for inputs"
     else:
         y = [388.9461 + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)]
-        return y
+        return int(y)
 
 
 
