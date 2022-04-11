@@ -101,7 +101,7 @@ def ames_lr_function(clicks, HadCovid, Income, Lunch, Computers, Fed, Med, PreCo
     if clicks==0:
         return "waiting for inputs"
     else:
-        y = [388.9461 + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)]
+        y = 388.9461 + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)
         return int(y)
 
 
