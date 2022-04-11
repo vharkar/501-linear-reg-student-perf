@@ -1,7 +1,17 @@
 import dash
 from dash import dcc,html
+from dash import dash_table
 from dash.dependencies import Input, Output, State
+import pandas as pd
 
+
+### Income Levels Data frame ###
+import pandas as pd
+ 
+# initialize list of lists
+data = [['0', 'No HS Diploma'], ['1', 'High School Diploma'], ['2', 'Bachelors Degree'], ['3', 'Masters Degree'], ['4', 'Doctoral Degree']]
+         
+incomes_df = pd.DataFrame(data, columns = ['Index', 'Education Level'])
 
 
 ########### Define your variables ######
@@ -28,7 +38,7 @@ app.layout = html.Div(children=[
                 html.Div('Student had Covid:'),
                 dcc.Input(id='HadCovid', value=0, type='number', min=0, max=1, step=1),
                 html.Div('Household Income:'),
-                dcc.Input(id='Income', value=60000, type='number', min=0, max=180000, step=30000),
+                dcc.Input(id='Income', value=60000, type='number', min=0, max=180000, step=10000),
                 html.Div('Free Lunch Available:'),
                 dcc.Input(id='Lunch', value=1, type='number', min=0, max=1, step=1),
                 html.Div('Number of household computers:'),
@@ -38,7 +48,7 @@ app.layout = html.Div(children=[
                 html.Div('Fathers Education:'),
                 dcc.Input(id='Fed', value=1, type='number', min=0, max=4, step=1),
                 html.Div('Pre-Covid Score:'),
-                dcc.Input(id='PreCovid', value=650, type='number', min=150, max=900, step=50),
+                dcc.Input(id='PreCovid', value=650, type='number', min=150, max=900, step=5),
 
             ], className='four columns'),
             html.Div([
@@ -59,7 +69,12 @@ app.layout = html.Div(children=[
     html.Br(),
     html.Br(),
     html.H4('Regression Equation:'),
-    html.Div('Predicted Price = (388.9461 Baseline) + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)'),
+    html.Div('Predicted Score = (388.9461 Baseline) + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)'),
+    html.Br(),
+    html.H4('Income Levels Table'),
+    html.Div([
+        dash_table.DataTable(incomes_df.to_dict('records'), [{"name": i, "id": i} for i in incomes_df.columns])
+    ]),
     html.Br(),
     html.A('Google Spreadsheet', href='https://docs.google.com/spreadsheets/d/1q2ustRvY-GcmPO5NYudvsBEGNs5Na5p_8LMeS4oM35U/edit?usp=sharing'),
     html.Br(),
@@ -86,7 +101,7 @@ def ames_lr_function(clicks, HadCovid, Income, Lunch, Computers, Fed, Med, PreCo
         return "waiting for inputs"
     else:
         y = [388.9461 + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)]
-        formatted_y = "${:,.2f}".format(y[0])
+        formatted_y = int(y)
         return formatted_y
 
 
