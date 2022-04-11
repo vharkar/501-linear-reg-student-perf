@@ -62,7 +62,7 @@ app.layout = html.Div(children=[
     html.H4('Regression Equation:'),
     html.Div('Predicted Score = (388.9461 Baseline) + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)'),
     html.Br(),
-    html.H4('Income Levels Table'),
+    html.H4('Income Levels Table:'),
     html.Div([
          html.Div([
            dash_table.DataTable(
@@ -78,10 +78,12 @@ app.layout = html.Div(children=[
            )
          ], className='two columns')
     ]),
-    html.Br(),
-    html.A('Code on Github', href=githublink),
-    html.Br(),
-    html.A("Data Source", href=sourceurl),
+    html.Div([
+        html.Br(),
+        html.A('Code on Github', href=githublink),
+        html.Br(),
+        html.A("Data Source", href=sourceurl)
+    ], className='twelve columns')
     ]
 )
 
