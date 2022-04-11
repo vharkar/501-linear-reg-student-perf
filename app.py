@@ -5,10 +5,10 @@ from dash.dependencies import Input, Output, State
 
 
 ########### Define your variables ######
-myheading1='Predicting Student Performance in School'
+myheading1='Predicting Student Performance in Post Covid Semesters'
 image1='StudentPerf.jpeg'
 tabtitle = 'Student Performance'
-sourceurl = 'http://jse.amstat.org/v19n3/decock.pdf'
+sourceurl = 'https://www.kaggle.com/datasets/dylanbollard/covid19-effect-on-grades-constructed-dataset'
 githublink = 'https://github.com/vharkar/501-linear-reg-student-perf'
 
 
@@ -24,19 +24,21 @@ app.layout = html.Div(children=[
     html.Div([
         html.Img(src=app.get_asset_url(image1), style={'width': '30%', 'height': 'auto'}, className='four columns'),
         html.Div([
-                html.H3('Factors in a Student\'s life:'),
-                html.Div('Year Built:'),
-                dcc.Input(id='YearBuilt', value=2010, type='number', min=2006, max=2010, step=1),
-                html.Div('Bathrooms:'),
-                dcc.Input(id='Bathrooms', value=2, type='number', min=1, max=5, step=1),
-                html.Div('Bedrooms:'),
-                dcc.Input(id='BedroomAbvGr', value=4, type='number', min=1, max=5, step=1),
-                html.Div('Total Square Feet:'),
-                dcc.Input(id='TotalSF', value=2000, type='number', min=100, max=5000, step=1),
-                html.Div('Single Family Home:'),
-                dcc.Input(id='SingleFam', value=0, type='number', min=0, max=1, step=1),
-                html.Div('Large Neighborhood:'),
-                dcc.Input(id='LargeNeighborhood', value=0, type='number', min=0, max=1, step=1),
+                html.H3('Student\'s Test Scores (Sum of Math, Reading, Writing Scores) after Covid Lockdowns:'),
+                html.Div('Student had Covid:'),
+                dcc.Input(id='HadCovid', value=0, type='number', min=0, max=1, step=1),
+                html.Div('Household Income:'),
+                dcc.Input(id='Income', value=60000, type='number', min=0, max=180000, step=30000),
+                html.Div('Free Lunch Available:'),
+                dcc.Input(id='Lunch', value=1, type='number', min=0, max=1, step=1),
+                html.Div('Number of household computers:'),
+                dcc.Input(id='Computers', value=1, type='number', min=0, max=5, step=1),
+                html.Div('Mothers Education:'),
+                dcc.Input(id='Med', value=1, type='number', min=0, max=4, step=1),
+                html.Div('Fathers Education:'),
+                dcc.Input(id='Fed', value=1, type='number', min=0, max=4, step=1),
+                html.Div('Pre-Covid Score:'),
+                dcc.Input(id='PreCovid', value=650, type='number', min=150, max=900, step=50),
 
             ], className='four columns'),
             html.Div([
@@ -48,7 +50,7 @@ app.layout = html.Div(children=[
                                 'verticalAlign': 'center',
                                 'horizontalAlign': 'center'}
                                 ),
-                html.H3('Predicted Home Value:'),
+                html.H3('Predicted Post-Covid Test Score:'),
                 html.Div(id='Results')
             ], className='four columns')
         ], className='twelve columns',
@@ -57,7 +59,7 @@ app.layout = html.Div(children=[
     html.Br(),
     html.Br(),
     html.H4('Regression Equation:'),
-    html.Div('Predicted Price = (- $1,360.5K Baseline) + ($0.7K * Year Built) + ($12.7K * Bathrooms) + (- $7.7K * Bedrooms) + ($0.049K * Total Square Feet) + ($ 25.2K * Single Family Home) + (- $6.6 K * Large Neighborhood)'),
+    html.Div('Predicted Price = (388.9461 Baseline) + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)'),
     html.Br(),
     html.A('Google Spreadsheet', href='https://docs.google.com/spreadsheets/d/1q2ustRvY-GcmPO5NYudvsBEGNs5Na5p_8LMeS4oM35U/edit?usp=sharing'),
     html.Br(),
@@ -67,24 +69,23 @@ app.layout = html.Div(children=[
     ]
 )
 
-
 ######### Define Callback
 @app.callback(
     Output(component_id='Results', component_property='children'),
     Input(component_id='submit-val', component_property='n_clicks'),
-    State(component_id='YearBuilt', component_property='value'),
-    State(component_id='Bathrooms', component_property='value'),
-    State(component_id='BedroomAbvGr', component_property='value'),
-    State(component_id='TotalSF', component_property='value'),
-    State(component_id='SingleFam', component_property='value'),
-    State(component_id='LargeNeighborhood', component_property='value')
-
+    State(component_id='HadCovid', component_property='value'),
+    State(component_id='Income', component_property='value'),
+    State(component_id='Lunch', component_property='value'),
+    State(component_id='Computers', component_property='value'),
+    State(component_id='Fed', component_property='value'),
+    State(component_id='Med', component_property='value'),
+    State(component_id='PreCovid', component_property='value')
 )
-def ames_lr_function(clicks, YearBuilt,Bathrooms,BedroomAbvGr,TotalSF,SingleFam,LargeNeighborhood):
+def ames_lr_function(clicks, HadCovid, Income, Lunch, Computers, Fed, Med, PreCovid):
     if clicks==0:
         return "waiting for inputs"
     else:
-        y = [-1360501.3809 + 704.4287*YearBuilt + 12738.4775*Bathrooms + -7783.1712*BedroomAbvGr + 49.824*TotalSF+ 25282.091*SingleFam+ -6637.2636*LargeNeighborhood]
+        y = [388.9461 + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)]
         formatted_y = "${:,.2f}".format(y[0])
         return formatted_y
 
