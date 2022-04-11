@@ -2,15 +2,6 @@ import dash
 from dash import dcc,html, dash_table
 from dash.dependencies import Input, Output, State
 
-
-### Income Levels Data frame ###
-import pandas as pd
- 
-# initialize list of lists
-data = {'0': 'No HS Diploma', '1': 'High School Diploma', '2': 'Bachelors Degree', '3': 'Masters Degree', '4': 'Doctoral Degree'}  
-incomes_df = pd.DataFrame(data, columns = ['Index', 'Education Level'])
-
-
 headings = ['Index', 'Education Level']
 levels = [['0', 'No HS Diploma'],['1', 'High School Diploma'],['2', 'Bachelors Degree'],['3', 'Masters Degree'],['4', 'Doctoral Degree']]
 
@@ -72,23 +63,21 @@ app.layout = html.Div(children=[
     html.Div('Predicted Score = (388.9461 Baseline) + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)'),
     html.Br(),
     html.H4('Income Levels Table'),
-    html.Div([
-        
-        dash_table.DataTable(
-           id='data_table',
-           columns=[{
-               'name': headings[i],
-               'id': headings[i],
-           } for i in range(2)],
-           data=[
-             {headings[i]: levels[j][i] for i in range(2)}
-             for j in range(5)
-           ]
-        )        
-        
-    ]),
-    html.Br(),
-    html.A('Google Spreadsheet', href='https://docs.google.com/spreadsheets/d/1q2ustRvY-GcmPO5NYudvsBEGNs5Na5p_8LMeS4oM35U/edit?usp=sharing'),
+    #html.Div([
+    #     
+    #     dash_table.DataTable(
+    #        id='data_table',
+    #        columns=[{
+    #            'name': headings[i],
+    #            'id': headings[i],
+    #        } for i in range(2)],
+    #        data=[
+    #         {headings[i]: levels[j][i] for i in range(2)}
+    #          for j in range(5)
+    #        ]
+    #     )        
+    #    
+    #]),
     html.Br(),
     html.A('Code on Github', href=githublink),
     html.Br(),
