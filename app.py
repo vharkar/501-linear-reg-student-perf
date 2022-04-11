@@ -63,21 +63,20 @@ app.layout = html.Div(children=[
     html.Div('Predicted Score = (388.9461 Baseline) + (- 19.5318 * HadCovid) + (0.001 * Income) + ( 31.9678 * Lunch) + ( 2.4321 * Computers) + ( 12.1617 * Fed) + ( 10.8461 * Med) + ( 0.1636 * PreCovid)'),
     html.Br(),
     html.H4('Income Levels Table'),
-    #html.Div([
-    #     
-    #     dash_table.DataTable(
-    #        id='data_table',
-    #        columns=[{
-    #            'name': headings[i],
-    #            'id': headings[i],
-    #        } for i in range(2)],
-    #        data=[
-    #         {headings[i]: levels[j][i] for i in range(2)}
-    #          for j in range(5)
-    #        ]
-    #     )        
-    #    
-    #]),
+    html.Div([
+         
+         dash_table.DataTable(
+            id='data_table',
+            columns=[{
+                'name': headings[i],
+                'id': headings[i],
+            } for i in range(2)],
+            data=[
+             {headings[i]: levels[j][i] for i in range(2)}
+              for j in range(5)
+            ]
+         )            
+    ]),
     html.Br(),
     html.A('Code on Github', href=githublink),
     html.Br(),
