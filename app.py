@@ -76,7 +76,7 @@ app.layout = html.Div(children=[
               for j in range(5)
             ]
          )            
-    ]),
+    ], className='four columns'),
     html.Br(),
     html.A('Code on Github', href=githublink),
     html.Br(),
