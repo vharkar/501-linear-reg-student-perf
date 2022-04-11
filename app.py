@@ -64,19 +64,20 @@ app.layout = html.Div(children=[
     html.Br(),
     html.H4('Income Levels Table'),
     html.Div([
-         
-         dash_table.DataTable(
-            id='data_table',
-            columns=[{
-                'name': headings[i],
-                'id': headings[i],
-            } for i in range(2)],
-            data=[
-             {headings[i]: levels[j][i] for i in range(2)}
-              for j in range(5)
-            ]
-         )            
-    ], className='four columns'),
+         html.Div([
+           dash_table.DataTable(
+              id='data_table',
+              columns=[{
+                  'name': headings[i],
+                  'id': headings[i],
+              } for i in range(2)],
+              data=[
+               {headings[i]: levels[j][i] for i in range(2)}
+                for j in range(5)
+              ]
+           )
+         ], className='two columns')
+    ]),
     html.Br(),
     html.A('Code on Github', href=githublink),
     html.Br(),
