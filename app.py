@@ -1,18 +1,18 @@
 import dash
-from dash import dcc,html
-from dash import dash_table
+from dash import dcc,html, dash_table
 from dash.dependencies import Input, Output, State
-import pandas as pd
 
 
 ### Income Levels Data frame ###
 import pandas as pd
  
 # initialize list of lists
-data = [['0', 'No HS Diploma'], ['1', 'High School Diploma'], ['2', 'Bachelors Degree'], ['3', 'Masters Degree'], ['4', 'Doctoral Degree']]
-         
+data = {'0': 'No HS Diploma', '1': 'High School Diploma', '2': 'Bachelors Degree', '3': 'Masters Degree', '4': 'Doctoral Degree'}  
 incomes_df = pd.DataFrame(data, columns = ['Index', 'Education Level'])
 
+
+headings = ['Index', 'Education Level']
+levels = [['0', 'No HS Diploma'],['1', 'High School Diploma'],['2', 'Bachelors Degree'],['3', 'Masters Degree'],['4', 'Doctoral Degree']]
 
 ########### Define your variables ######
 myheading1='Predicting Student Performance in Post Covid Semesters'
@@ -73,7 +73,19 @@ app.layout = html.Div(children=[
     html.Br(),
     html.H4('Income Levels Table'),
     html.Div([
-        dash_table.DataTable(incomes_df.to_dict('records'), [{"name": i, "id": i} for i in incomes_df.columns])
+        
+        dash_table.DataTable(
+           id='data_table',
+           columns=[{
+               'name': headings[i],
+               'id': headings[i],
+           } for i in range(2)],
+           data=[
+             {headings[i]: levels[j][i] for i in range(2)}
+             for j in range(5)
+           ]
+        )        
+        
     ]),
     html.Br(),
     html.A('Google Spreadsheet', href='https://docs.google.com/spreadsheets/d/1q2ustRvY-GcmPO5NYudvsBEGNs5Na5p_8LMeS4oM35U/edit?usp=sharing'),
