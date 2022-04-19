@@ -5,7 +5,7 @@ from dash.dependencies import Input, Output, State
 headings = ['Index', 'Education Level']
 levels = [['0', 'No HS Diploma'],['1', 'High School Diploma'],['2', 'Bachelors Degree'],['3', 'Masters Degree'],['4', 'Doctoral Degree']]
 
-########### Define your variables ######
+############# Define your variables ######
 myheading1='Predicting Student Performance in Post Covid Semesters'
 image1='StudentPerf.jpeg'
 tabtitle = 'Student Performance'
